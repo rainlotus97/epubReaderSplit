@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script> -->
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        #area {
+            text-align: left;
+            height: 100%;
+        }
+        body{
+            overflow: hidden;
+        }
+
+        .box-container {
+            padding: 20px;
+            height: 100vh;
+            width: 100vw;
+            box-sizing: border-box;
+            overflow: auto;
+        }
+
+        .title {
+            font-size: 20px;
+            color: red;
+
+        }
+
+        .content {
+            font-size: 16px;
+            color: black;
+            line-height: 1.5;
+        }
+
+        .target {
+            padding: 20px;
+            background-color: #f0f0f0;
+            width: 100px;
+            height: 40px;
+            position: fixed;
+            top: 0;
+            left: 100px;
+            z-index: 999;
+
+        }
+        .target2 {
+            padding: 20px;
+            background-color: #f0f0f0;
+            width: 100px;
+            height: 40px;
+            position: fixed;
+            top: 0;
+            right: 100px;
+            z-index: 999;
+
+        }
+
+        #viewport {
+            position: absolute;
+            background-color: #fff;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            left: 0;
+            top: 0;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="target" onclick="prev()">上一页</div>
+    <div class="target2" onclick="next()">下一页</div>
+    <div class="box-container">
+           <div id="area">
+        <p class="title">斗破苍穹</p>
+        <p class="content">
+            1这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。
+        </p>
+        <p class="content">
+            2这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。
+        </p>
+        <p class="content">
+            3这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。
+        </p>
+        <p class="content">
+            4这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。
+        </p>
+        <p class="content">
+            5这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。
+        </p>
+        <p class="content">
+            6这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。
+        </p>
+        <p class="content">
+            7这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。
+        </p>
+        <p class="content">
+            8这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。
+        </p>
+        <p class="content">
+            9这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。
+        </p>
+        <p class="content">
+            10这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。
+        </p>
+        <p class="content">
+            11这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。
+        </p>
+        <p class="content">
+            12这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。
+        </p>
+        <p class="content">
+            13这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。
+        </p>
+        <p class="content">
+            14这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。
+        </p>
+        <p class="content">
+            15这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。
+        </p>
+        <p class="content">
+            16这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。这是一段测试文字。
+        </p>
+    </div>
+    </div>
+ 
+    <div id="viewport"></div>
+
+
+
+
+    <script>
+        function calculateHeight(a, b) {
+            // 如果 a 是 b 的整数倍，则返回 a
+            if (a % b === 0) {
+                return a;
+            } else {
+                // 向上取整至 b 的整数倍
+                return Math.ceil(a / b) * b;
+            }
+        }
+
+        // 测试
+        var a = 14; // 实际高度
+        var b = 5;  // 固定高度
+
+        var result = calculateHeight(a, b);
+        console.log("结果:", result);
+
+    </script>
+
+    <script>
+        let deviceWidth = document.documentElement.clientWidth;
+        console.log('deviceWidth', deviceWidth);
+
+       let container= document.querySelector('.box-container')
+       container.scrollTo(0,0)
+        let scrollHeight = container.scrollHeight;
+        console.log('scrollHeight', scrollHeight);
+
+        let deviceHeight = container.clientHeight;
+        console.log('deviceHeight', deviceHeight);
+
+        let containerHeight = deviceHeight - 40;
+        console.log('containerHeight', containerHeight);
+
+        if (scrollHeight > deviceHeight) {
+            let setHeight = calculateHeight(scrollHeight, containerHeight);
+            document.querySelector('#area').style.height = setHeight + 'px';
+        }
+
+        let rect = document.querySelector('#area').getBoundingClientRect();
+        console.log(rect);
+
+        let pages = []
+        let pageItem = [];
+        let currentHeight = 0;
+        let heightArr=[]
+        document.querySelector('#area').childNodes.forEach((node) => {
+            if (node.nodeType === 1 || (node.nodeType === 3 && node.nodeValue.trim() !== '')) {
+                let itemNode = node.getBoundingClientRect();
+                if (currentHeight + itemNode.height > containerHeight) {
+                    pages.push(pageItem);
+                    heightArr.push(currentHeight);
+                    pageItem = [];
+                    pageItem.push(node);
+                    currentHeight = 0;
+                } else {
+                    currentHeight += itemNode.height;
+                    // 设置结点的id
+                    pageItem.push(node);
+                }
+                console.log(pageItem.length, currentHeight);
+            }
+        });
+        if (currentHeight < containerHeight) {
+            pages.push(pageItem);
+        }
+        let firstpageItem = pages[0];
+
+        firstpageItem.forEach((node) => {
+            document.querySelector('#viewport').appendChild(node);
+        });
+
+        console.log(pages, currentHeight);
+        let range = document.createRange();
+
+
+        const next = () => {
+            container.scrollTo(0, heightArr[0]);
+            let secondpageItem = pages[1];
+            console.log(secondpageItem);
+            document.querySelector('#viewport').innerHTML = '';
+            secondpageItem.forEach((node) => {
+                document.querySelector('#viewport').appendChild(node);
+            });
+        }
+        const prev = () => {
+            container.scrollTo(0, 0);
+            let firstpageItem = pages[0];
+            document.querySelector('#viewport').innerHTML = '';
+            firstpageItem.forEach((node) => {
+                document.querySelector('#viewport').appendChild(node);
+            });
+        }
+    </script>
+
+</body>
+
+</html>
